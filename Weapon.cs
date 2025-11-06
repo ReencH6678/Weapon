@@ -4,6 +4,12 @@ class Weapon
 {
     public Weapon(int damage, int bullets)
     {
+        if (damage < 0)
+            throw new ArgumentOutOfRangeException();
+
+        if (bullets < 0)
+            throw new ArgumentOutOfRangeException();
+
         Damage = damage;
         Bullets = bullets;
     }
@@ -14,11 +20,10 @@ class Weapon
     public void Fire(Player player)
     {
         if (Bullets <= 0)
-            throw new InvalidOperationException();
+            throw new ArgumentOutOfRangeException();
 
-            Bullets--;
-            player.TakeDamage(Damage);
-        
+        Bullets--;
+        player.TakeDamage(Damage);
     }
 }
 
@@ -28,6 +33,9 @@ class Player
 
     public Player(int health)
     {
+        if (_health <= 0)
+            throw new ArgumentOutOfRangeException();
+
         _health = health;
     }
 
@@ -36,7 +44,7 @@ class Player
         if (damage < 0)
             throw new ArgumentOutOfRangeException();
 
-            _health -= damage;
+        _health -= damage;
     }
 }
 
@@ -46,6 +54,9 @@ class Bot
 
     public Bot(Weapon weapon)
     {
+        if (weapon == null)
+            throw new ArgumentNullException();
+
         _weapon = weapon;
     }
 
